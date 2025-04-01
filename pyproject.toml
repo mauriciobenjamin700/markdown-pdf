@@ -1,0 +1,14 @@
+[project]
+name = "markdown-pdf"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "markdown>=3.7",
+    "mathjax>=0.1.2",
+    "pygments>=2.19.1",
+    "pymdown-extensions>=10.14.3",
+    "python-markdown-math>=0.8",
+    "weasyprint>=65.0",
+]
