@@ -1,8 +1,6 @@
-from src.backend.conversor import markdown_to_pdf
+import flet
+
+from src.frontend import home
 
 
-markdown_to_pdf(
-    "test.md",
-    "README.pdf",
-    None
-)
+flet.app(home)

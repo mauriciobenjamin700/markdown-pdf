@@ -5,6 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "flet[all]>=0.27.6",
     "markdown>=3.7",
     "mathjax>=0.1.2",
     "pygments>=2.19.1",
