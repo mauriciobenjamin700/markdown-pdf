@@ -6,6 +6,12 @@ from flet import (
     TextStyle
 )
 
+from src.frontend.styles import (
+    HINT_STYLE,
+    LABEL_STYLE,
+    TEXT_STYLE
+)
+
 class Input(TextField):
     """
     
@@ -28,25 +34,10 @@ class Input(TextField):
             height=50,
             text_align=TextAlign.CENTER,
             align_label_with_hint=True,
-            label_style=TextStyle(
-                size=20,
-                weight=FontWeight.BOLD,
-                color=Colors.GREY_300,
-                font_family="Roboto",
-            ),
-            text_style=TextStyle(
-                size=20,
-                weight=FontWeight.NORMAL,
-                color=Colors.GREY_300,
-                font_family="Roboto",
-            ),
+            label_style=LABEL_STYLE,
+            text_style=TEXT_STYLE,
             hint_text=hint_text,
-            hint_style=TextStyle(
-                size=20,
-                weight=FontWeight.NORMAL,
-                color=Colors.GREY_500,
-                font_family="Roboto",
-            ),
+            hint_style=HINT_STYLE,
         )
 
     def get(self):
