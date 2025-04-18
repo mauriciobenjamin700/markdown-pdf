@@ -13,3 +13,21 @@ dependencies = [
     "python-markdown-math>=0.8",
     "weasyprint>=65.0",
 ]
+
+[dependency-groups]
+dev = [
+    "black>=25.1.0",
+    "flake8>=7.2.0",
+    "isort>=6.0.1",
+    "ruff>=0.11.6",
+]
+
+[tool.ruff]
+line-length = 88
+lint.select = ["E", "F", "W", "C90"]
+lint.ignore = ["E501"]  # Ignorar linhas longas (se necessário)
+
+[tool.isort]
+profile = "black"
+line_length = 88
+known_third_party = ["flet"]

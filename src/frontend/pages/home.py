@@ -1,7 +1,6 @@
 import flet as ft
 
-from src.frontend.components import SearchFiles
-from src.frontend.components import Input
+from src.frontend.components import Input, SearchFiles
 
 
 def main(page: ft.Page):
@@ -28,14 +27,13 @@ def main(page: ft.Page):
 
     page.overlay.append(pick_files_dialog)
 
-    
     page.add(
         ft.Container(
             content=ft.Row(
                 [
                     file_selected_input,
                     SearchFiles(lambda _: pick_files_dialog.pick_files()),
-                    pick_files_dialog
+                    pick_files_dialog,
                 ],
                 alignment=ft.MainAxisAlignment.CENTER,
             ),
@@ -44,6 +42,6 @@ def main(page: ft.Page):
                 left=0,
                 right=0,
                 bottom=0,
-            )
+            ),
         )
     )

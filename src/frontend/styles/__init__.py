@@ -1,7 +1,7 @@
 from .text import (
     HINT_STYLE,
     LABEL_STYLE,
-    TEXT_STYLE,   
+    TEXT_STYLE,
 )
 
 __all__ = [

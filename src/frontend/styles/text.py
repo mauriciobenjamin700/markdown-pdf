@@ -1,8 +1,4 @@
-from flet import (
-    Colors,
-    FontWeight,
-    TextStyle
-)
+from flet import Colors, FontWeight, TextStyle
 
 TEXT_STYLE = TextStyle(
     size=20,

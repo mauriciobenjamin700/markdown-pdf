@@ -1,12 +1,10 @@
-import markdown
-from weasyprint import HTML
 import os
 
-def markdown_to_pdf(
-        md_file_path: str, 
-        pdf_file_path: str, 
-        css_file_path=None
-    ):
+import markdown
+from weasyprint import HTML
+
+
+def markdown_to_pdf(md_file_path: str, pdf_file_path: str, css_file_path=None):
     """
     A function to convert a Markdown file to PDF using WeasyPrint.
 
@@ -15,27 +13,30 @@ def markdown_to_pdf(
       - pdf_file_path:: str: Path to the output PDF file.
       - css_file_path:: str: Path to the CSS file for styling (optional).
 
-    - 
+    -
     """
     # Read the Markdown file
-    with open(md_file_path, 'r', encoding='utf-8') as f:
+    with open(md_file_path, "r", encoding="utf-8") as f:
         md_content = f.read()
-    
+
     # Convert Markdown to HTML
-    html_content = markdown.markdown(md_content, extensions=[
-        'fenced_code',       # Suporte a blocos de código cercados
-        'codehilite',        # Destaque de sintaxe (requer pygments)
-        'tables',            # Suporte a tabelas
-        'toc',              # Tabela de conteúdo (opcional)
-        'nl2br',            # Quebra de linha
-        'sane_lists',       # Listas seguras
-        'attr_list',        # Atributos de lista
-        'meta',             # Metadados
-        'smarty',           # Aspas inteligentes
-        'footnotes',        # Notas de rodapé
-        'mdx_math',        # Suporte a matemática (opcional)
-    ])
-    
+    html_content = markdown.markdown(
+        md_content,
+        extensions=[
+            "fenced_code",  # Suporte a blocos de código cercados
+            "codehilite",  # Destaque de sintaxe (requer pygments)
+            "tables",  # Suporte a tabelas
+            "toc",  # Tabela de conteúdo (opcional)
+            "nl2br",  # Quebra de linha
+            "sane_lists",  # Listas seguras
+            "attr_list",  # Atributos de lista
+            "meta",  # Metadados
+            "smarty",  # Aspas inteligentes
+            "footnotes",  # Notas de rodapé
+            "mdx_math",  # Suporte a matemática (opcional)
+        ],
+    )
+
     # Criar HTML completo com estilos
     full_html = f"""
     <!DOCTYPE html>
@@ -61,6 +62,6 @@ def markdown_to_pdf(
     </body>
     </html>
     """
-    
+
     # Gerar PDF
     HTML(string=full_html).write_pdf(pdf_file_path)
