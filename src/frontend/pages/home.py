@@ -11,6 +11,18 @@ def main(page: ft.Page):
     page.vertical_alignment = ft.MainAxisAlignment.START
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
 
+    page.window.width = 1280
+    page.window.height = 720
+    page.window.resizable = False
+    page.window.center()
+
+    # control vars
+
+    data = {
+        "selected_file_path": "",
+        "selected_file_name": "",
+    }
+
     file_selected_input = Input(
         label=None,
         helper_text=None,
@@ -19,8 +31,16 @@ def main(page: ft.Page):
     )
 
     def get_selected_file_path(e: ft.FilePickerResultEvent):
-        path = e.files[0].path if e.files else ""
-        file_selected_input.set(path)
+
+        file = e.files[0] if e.files else ""
+        
+        if file:
+            data["selected_file_path"] = file.path
+            data["selected_file_name"] = file.name
+
+        file_selected_input.set(
+            data["selected_file_name"]
+        )
         file_selected_input.update()
 
     pick_files_dialog = ft.FilePicker(on_result=get_selected_file_path)
