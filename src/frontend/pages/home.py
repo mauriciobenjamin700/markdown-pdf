@@ -1,6 +1,6 @@
 import flet as ft
 
-from src.frontend.components import Input, SearchFiles
+from src.frontend.components import ConvertDoc, Input, SearchFiles
 
 
 def main(page: ft.Page):
@@ -30,6 +30,13 @@ def main(page: ft.Page):
         read_only=True,
     )
 
+    output = Input(
+        label=None,
+        helper_text=None,
+        hint_text="output path",
+        read_only=False
+    )
+
     def get_selected_file_path(e: ft.FilePickerResultEvent):
 
         file = e.files[0] if e.files else ""
@@ -52,7 +59,10 @@ def main(page: ft.Page):
             content=ft.Row(
                 [
                     file_selected_input,
-                    SearchFiles(lambda _: pick_files_dialog.pick_files()),
+                    SearchFiles(lambda _: pick_files_dialog.pick_files(
+                        file_type=ft.FilePickerFileType.ANY,
+                        allowed_extensions=[".txt", "txt"]
+                    )),
                     pick_files_dialog,
                 ],
                 alignment=ft.MainAxisAlignment.CENTER,
@@ -62,6 +72,25 @@ def main(page: ft.Page):
                 left=0,
                 right=0,
                 bottom=0,
+            )
+        )
+    )
+    page.add(
+        ft.Container(
+            content=ft.Row(
+                [
+                    output,
+                    ConvertDoc(
+                        on_click=lambda _: print("Convert doc")
+                    )
+                ],
+                alignment=ft.MainAxisAlignment.CENTER
             ),
+            margin=ft.Margin(
+                top=50,
+                left=0,
+                right=0,
+                bottom=0
+            )
         )
     )
