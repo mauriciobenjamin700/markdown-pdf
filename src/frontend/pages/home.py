@@ -1,5 +1,7 @@
 import flet as ft
+from os.path import abspath, basename
 
+from src.backend import markdown_to_pdf
 from src.frontend.components import ConvertDoc, Input, SearchFiles
 
 
@@ -21,7 +23,18 @@ def main(page: ft.Page):
     data = {
         "selected_file_path": "",
         "selected_file_name": "",
+        "output_path": abspath("pdf/")
     }
+
+    def handle_convert(e = None):
+
+        if data["selected_file_path"]:
+            md_file = data["selected_file_path"]
+            ext = basename(md_file).split(".")[-1]
+            if ext not in ["md", "MD"]:
+                page.ale
+
+        markdown_to_pdf()
 
     file_selected_input = Input(
         label=None,
@@ -81,7 +94,7 @@ def main(page: ft.Page):
                 [
                     output,
                     ConvertDoc(
-                        on_click=lambda _: print("Convert doc")
+                        on_click=handle_convert
                     )
                 ],
                 alignment=ft.MainAxisAlignment.CENTER
