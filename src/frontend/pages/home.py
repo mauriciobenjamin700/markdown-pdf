@@ -1,8 +1,9 @@
 import flet as ft
-from os.path import abspath, basename
+from os import mkdir
+from os.path import abspath, basename, exists,join
 
 from src.backend import markdown_to_pdf
-from src.frontend.components import ConvertDoc, Input, SearchFiles
+from src.frontend.components import Alert, ConvertDoc, Input, SearchFiles
 
 
 def main(page: ft.Page):
@@ -23,18 +24,54 @@ def main(page: ft.Page):
     data = {
         "selected_file_path": "",
         "selected_file_name": "",
-        "output_path": abspath("pdf/")
+        "output_path": abspath("pdf/"),
+        "output_file_name": "",
+    }
+
+    if not exists(data["output_path"]):
+        mkdir(data["output_path"])
+
+    def handle_close_alert(e):
+        for value in alerts.values():
+            if value.open:
+                page.close(value)
+
+    alerts = {
+        "error": Alert(
+                        title="Error",
+                        content="Please select a markdown file",
+                        on_click=handle_close_alert,
+                    ),
+        "success": Alert(
+                        title="Success",
+                        content=f"File converted to {data['output_file_name']}.pdf and saved to {abspath(data['output_path'])}",
+                        on_click=handle_close_alert,
+                    )
     }
 
     def handle_convert(e = None):
+
+        data["output_file_name"] = output.get() if output.get() else data["output_file_name"]
 
         if data["selected_file_path"]:
             md_file = data["selected_file_path"]
             ext = basename(md_file).split(".")[-1]
             if ext not in ["md", "MD"]:
-                page.ale
+                page.open(alerts["error"])
+            else:
 
-        markdown_to_pdf()
+                if data["output_file_name"] == "":
+                    data["output_file_name"] = basename(md_file).split(".")[0]
+
+                markdown_to_pdf(
+                    data["selected_file_path"],
+                    join(data["output_path"], data["output_file_name"] + ".pdf"),
+                )
+
+                page.open(alerts["success"])
+
+        else:
+            page.open(alerts["error"])
 
     file_selected_input = Input(
         label=None,
@@ -73,7 +110,7 @@ def main(page: ft.Page):
                 [
                     file_selected_input,
                     SearchFiles(lambda _: pick_files_dialog.pick_files(
-                        file_type=ft.FilePickerFileType.ANY,
+                        #file_type=ft.FilePickerFileType.ANY,
                         allowed_extensions=[".txt", "txt"]
                     )),
                     pick_files_dialog,
