@@ -125,25 +125,6 @@ def main(page: ft.Page):
             )
         )
     )
-    page.add(
-        ft.Container(
-            content=ft.Row(
-                [
-                    output,
-                    ConvertDoc(
-                        on_click=handle_convert
-                    )
-                ],
-                alignment=ft.MainAxisAlignment.CENTER
-            ),
-            margin=ft.Margin(
-                top=50,
-                left=0,
-                right=0,
-                bottom=0
-            )
-        )
-    )
 
     style_selected = Input(
         label=None,
@@ -181,6 +162,27 @@ def main(page: ft.Page):
                 [
                     style_selected,
                     pb
+                ],
+                alignment=ft.MainAxisAlignment.CENTER
+            ),
+            margin=ft.Margin(
+                top=50,
+                left=0,
+                right=0,
+                bottom=0
+            )
+        )
+    )
+
+
+    page.add(
+        ft.Container(
+            content=ft.Row(
+                [
+                    output,
+                    ConvertDoc(
+                        on_click=handle_convert
+                    )
                 ],
                 alignment=ft.MainAxisAlignment.CENTER
             ),
