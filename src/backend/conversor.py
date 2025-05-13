@@ -15,7 +15,6 @@ def markdown_to_pdf(md_file_path: str, pdf_file_path: str, css_file_path: str = 
       - md_file_path:: str: Path to the input Markdown file.
       - pdf_file_path:: str: Path to the output PDF file.
       - css_file_path:: str: Path to the CSS file for styling (optional).
-    -
     """
     try:
         with open(md_file_path, "r", encoding="utf-8") as f:
@@ -43,6 +42,10 @@ def markdown_to_pdf(md_file_path: str, pdf_file_path: str, css_file_path: str = 
         html_content = markdown.markdown(md_content, extensions=extensions)
     except Exception as e:
         raise Exception(f"Erro ao converter Markdown: {e}")
+
+    # Resolver caminhos relativos para imagens
+    base_path = os.path.dirname(md_file_path)
+    html_content = html_content.replace('src="', f'src="{base_path}/')
 
     # CSS padrão para trabalhos acadêmicos (sem header no topo)
 
@@ -77,7 +80,7 @@ def markdown_to_pdf(md_file_path: str, pdf_file_path: str, css_file_path: str = 
 
     # Gerar PDF
     try:
-        HTML(string=full_html).write_pdf(pdf_file_path)
+        HTML(string=full_html, base_url=base_path).write_pdf(pdf_file_path)
         print(f"PDF gerado com sucesso: {pdf_file_path}")
     except Exception as e:
         print(f"Erro ao gerar PDF: {e}")
